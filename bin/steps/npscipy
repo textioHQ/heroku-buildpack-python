@@ -41,8 +41,8 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   export BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
   export LAPACK=$(pwd)/vendor/lib/atlas-base/atlas/liblapack.a
   export ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
-  export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
-  export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
+  export LIBRARY_PATH=$PATH:$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
+  export LD_LIBRARY_PATH=$PATH:$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
 
   PACKAGE_LEN=${#PACKAGES[@]}
   for (( i=0; i < PACKAGE_LEN; i++))
