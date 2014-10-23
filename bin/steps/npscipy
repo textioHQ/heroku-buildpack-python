@@ -44,7 +44,7 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
   export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
 
-  PACKAGE_LEN=${PACKAGES[@]}
+  PACKAGE_LEN=${#PACKAGES[@]}
   for (( i=0; i <= PACKAGE_LEN; i++))
   do
       PACKAGE=${PACKAGES[i]}
