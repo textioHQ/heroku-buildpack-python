@@ -41,22 +41,18 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   export ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
   export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
   export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
-  for PACKAGE in "${PACKAGES[@]}"
-  do
-    echo "-----> Looking for package $PACKAGE in ../requirements.txt"    
-      cd $VENDORED_GIT_NAME
-      NAME="$PACKAGE-$VERSION"
-      git checkout HEAD $NAME.tar.gz
 
-      FOUND=0
-      if (file $NAME.tar.gz | grep -iqe "gzip compressed data") then
-        FOUND=1
-      else
-        DEFAULT_VERSION=$DEFAULT_VERSIONS[$i]
-        echo "Could not find binaries for $NAME-$VERSION. Using default: $DEFAULT_VERSION"
-        NAME="$PACKAGE-$DEFAULT_VERSION"
-        git checkout HEAD $NAME.tar.gz
-      fi
+  PACKAGE_LEN = ${PACKAGES[@]}
+  for (( i=0; i <= PACKAGE_LEN; i++))
+  do
+      PACKAGE=${PACKAGES[i]}
+      VERSION=${DEFAULT_VERSIONS[i]}
+      echo "-----> Looking for package $PACKAGE : $VERSION"    
+      cd $VENDORED_GIT_NAME
+      DEFAULT_VERSION=$DEFAULT_VERSIONS[$i]
+      NAME="$PACKAGE-$DEFAULT_VERSION"
+
+      git checkout HEAD $NAME.tar.gz
 
       cd ../python
       tar xf "../$VENDORED_GIT_NAME/$NAME.tar.gz"
