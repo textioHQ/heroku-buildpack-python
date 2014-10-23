@@ -17,6 +17,8 @@ VENDORED_BINARIES="npscipy"
 PACKAGES=("numpy" "scipy" "scikit-learn")
 DEFAULT_VERSIONS=("1.8.1" "0.14.0" "0.15-git")
 
+bpwatch start npscipy_install
+
 if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   echo "-----> Noticed numpy/scipy/scikit-learn. Bootstrapping prebuilt binaries."
   cd .heroku
@@ -61,3 +63,4 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   done
   cd ..
 fi
+bpwatch stop npscipy_install
