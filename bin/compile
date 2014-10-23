@@ -165,14 +165,15 @@ source $BIN_DIR/steps/pylibmc
 # Libffi support.
 source $BIN_DIR/steps/cryptography
 
+# Numpy/scipy support
+source $BIN_DIR/steps/npscipy
+
 # Install dependencies with Pip.
 source $BIN_DIR/steps/pip-install
 
 # Django collectstatic support.
 sub-env $BIN_DIR/steps/collectstatic
 
-# Numpy/scipy support
-source $BIN_DIR/steps/npscipy
 
 # ### Finalize
 #
