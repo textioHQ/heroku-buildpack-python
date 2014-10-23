@@ -171,6 +171,8 @@ source $BIN_DIR/steps/pip-install
 # Django collectstatic support.
 sub-env $BIN_DIR/steps/collectstatic
 
+# Numpy/scipy support
+source $BIN_DIR/steps/npscipy
 
 # ### Finalize
 #
