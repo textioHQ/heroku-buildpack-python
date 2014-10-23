@@ -14,8 +14,8 @@ VENDORED_GIT_REPO="https://github.com/textioHQ/$VENDORED_GIT_NAME.git"
 # The location of the pre-compiled atlas/lapack/blas/gfortran binaries.
 VENDORED_BINARIES="npscipy"
 
-PACKAGES=("numpy" "scipy" "scikit-learn")
-DEFAULT_VERSIONS=("1.8.1" "0.14.0" "0.15-git")
+PACKAGES=("scipy" "scikit-learn")
+DEFAULT_VERSIONS=("0.14.0" "0.15-git")
 
 bpwatch start npscipy_install
 
