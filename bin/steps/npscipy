@@ -51,8 +51,7 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
       VERSION=${DEFAULT_VERSIONS[i]}
       echo "-----> Looking for package $PACKAGE : $VERSION"    
       cd $VENDORED_GIT_NAME
-      DEFAULT_VERSION=$DEFAULT_VERSIONS[$i]
-      NAME="$PACKAGE-$DEFAULT_VERSION"
+      NAME="$PACKAGE-$VERSION"
 
       git checkout HEAD $NAME.tar.gz
 
