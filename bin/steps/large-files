@@ -6,6 +6,7 @@ LARGE_FILE_FOLDER='large-files'
 VERSIONS=("https://s3-us-west-2.amazonaws.com/textiodemoclassifier/version.txt")
 FILE_URLS=("https://s3-us-west-2.amazonaws.com/textiodemoclassifier/classifier.tar.gz")
 DESTS=("/app/.heroku/large-files/large-files/modeler/")
+DEST_NAMES=("classifier.pickle")
 #DESTS=("/app/textio_server/modeler/")
 
 echo "Starting large-files"
@@ -26,6 +27,7 @@ do
     VERSION=${VERSIONS[i]}
     FILE_URL=${FILE_URLS[i]}
     DEST=${DESTS[i]}
+    DEST_NAME=${DEST_NAMES[i]}
 
     echo $VERSION $FILE_URL $DEST
 
@@ -45,12 +47,9 @@ do
 
     if [ "$VERSION_MATCH"  = false ];  then
         echo "Downloading $FILE_URL to $DEST"
-        rm -rf $DEST
         mkdir -p $DEST
         cd $DEST 
-        curl $FILE_URL | tar xz
-        echo "directory contents are"
-        pwd
+        curl -o $DEST_NAME $FILE_URL
         ls
     fi
 done
