@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# This script downloads large files and places them on the server
+# if they are newer than binaries on the system
+
+VERSIONS=("https://s3-us-west-2.amazonaws.com/textiodemoclassifier/version.txt")
+FILE_URLS=("https://s3-us-west-2.amazonaws.com/textiodemoclassifier/classifier.tar.gz")
+DESTS=("/app/.heroku/")
+#DESTS=("/app/textio_server/modeler/")
+
+bpwatch start large-files_install
+FILES_LEN=${#VERSOIONS[@]}
+for (( i=0; i < FILES_LEN; i++))
+do
+      VERSION=${VERSIONS[i]}
+      FILE_URL=${FILE_URLS[i]}
+      DEST=${DESTS[i]}
+      echo $VERSION $FILE_URL $DEST
+      echo "Downloading the version"
+      VERSION_CONTENTS="curl $VERSION"
+      echo "contents are $VERSION_CONTENTS"
+done
+bpwatch stop large-files_install
+
+
