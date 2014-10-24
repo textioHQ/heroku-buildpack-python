@@ -2,26 +2,58 @@
 
 # This script downloads large files and places them on the server
 # if they are newer than binaries on the system
-
+LARGE_FILE_FOLDER='large-files'
 VERSIONS=("https://s3-us-west-2.amazonaws.com/textiodemoclassifier/version.txt")
 FILE_URLS=("https://s3-us-west-2.amazonaws.com/textiodemoclassifier/classifier.tar.gz")
-DESTS=("/app/.heroku/")
+DESTS=("/app/.heroku/large-files/large-files/modeler/")
+DEST_NAMES=("classifier.pickle")
 #DESTS=("/app/textio_server/modeler/")
 
 echo "Starting large-files"
 bpwatch start large-files_install
+# Save the current working directory and restore it at the end
+pushd .
+
+mkdir -p /app/.heroku/$LARGE_FILE_FOLDER
+cd /app/.heroku/$LARGE_FILE_FOLDER
+
+
+
 FILES_LEN=${#VERSIONS[@]}
 echo "Downloading $FILES_LEN files"
 for (( i=0; i < FILES_LEN; i++))
 do
-      VERSION=${VERSIONS[i]}
-      FILE_URL=${FILE_URLS[i]}
-      DEST=${DESTS[i]}
-      echo $VERSION $FILE_URL $DEST
-      echo "Downloading the version"
-      VERSION_CONTENTS=$(curl $VERSION)
-      echo "contents are $VERSION_CONTENTS"
+    # Set variables    
+    VERSION=${VERSIONS[i]}
+    FILE_URL=${FILE_URLS[i]}
+    DEST=${DESTS[i]}
+    DEST_NAME=${DEST_NAMES[i]}
+
+    echo $VERSION $FILE_URL $DEST
+
+    # Download the url
+    VERSION_CONTENTS=$(curl $VERSION)
+    echo "Online version number is $VERSION_CONTENTS"
+
+    VERSION_MATCH=false
+    # see if the offline version exists:
+    if [ -e $i.version.txt ]; then
+        VERSION_CONTENTS=$(cat $i.version.txt)
+        if [ "$VERSION_CONTENTS" = "$EXISTING_CONTENTS" ]; then
+            VERSION_MATCH=true
+            echo "Found existing match for $VERSION $FILE_URL"
+        fi
+    fi
+
+    if [ "$VERSION_MATCH"  = false ];  then
+        echo "Downloading $FILE_URL to $DEST"
+        mkdir -p $DEST
+        cd $DEST 
+        curl -o $DEST_NAME $FILE_URL
+        ls
+    fi
 done
+popd
 bpwatch stop large-files_install
 echo "Ending large-files"
 
