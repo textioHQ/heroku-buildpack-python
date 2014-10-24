@@ -19,7 +19,7 @@ do
       DEST=${DESTS[i]}
       echo $VERSION $FILE_URL $DEST
       echo "Downloading the version"
-      VERSION_CONTENTS=$(curl $VERSION)
+      VERSION_CONTENTS="curl $VERSION"
       echo "contents are $VERSION_CONTENTS"
 done
 bpwatch stop large-files_install
