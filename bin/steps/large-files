@@ -8,10 +8,8 @@ FILE_URLS=("https://s3-us-west-2.amazonaws.com/textiodemoclassifier/classifier.t
 DESTS=("/app/.heroku/")
 #DESTS=("/app/textio_server/modeler/")
 
-echo "Starting large-files"
 bpwatch start large-files_install
-FILES_LEN=${#VERSIONS[@]}
-echo "Downloading $FILES_LEN files"
+FILES_LEN=${#VERSOIONS[@]}
 for (( i=0; i < FILES_LEN; i++))
 do
       VERSION=${VERSIONS[i]}
@@ -23,6 +21,5 @@ do
       echo "contents are $VERSION_CONTENTS"
 done
 bpwatch stop large-files_install
-echo "Ending large-files"
 
 
