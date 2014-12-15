@@ -64,16 +64,3 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   cd ..
 fi
 bpwatch stop npscipy_install
-
-echo "----> Installing Enchant"
-VENDORED_ENCHANT="https://s3.amazonaws.com/docsome/enchant-1.6.tgz"
-if [ -d "/app/.heroku/vendor/lib/enchant" ]; then
-    echo "Enchant already exists. Nothing to do"
-  else
-    cd /app/.heroku
-    # Download and extract enchant into target vendor directory.
-    curl -s -L -o tmp-enchant.tgz $VENDORED_ENCHANT
-    tar -zxvf tmp-enchant.tgz -C /app/.heroku/vendor > /dev/null
-    rm tmp-enchant.tgz
-    cd ..
-  fi
